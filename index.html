@@ -385,7 +385,7 @@
   }
   .info-grid { display: grid; grid-template-columns: auto 1fr; row-gap: 10px; column-gap: 18px; font-size: 13.5px; }
   .info-grid dt { color: var(--ink-soft); white-space: nowrap; }
-  .info-grid dd { color: var(--ink); font-weight: 600; }
+  .info-grid dd { color: var(--ink); font-weight: 600; min-width: 0; overflow-wrap: anywhere; word-break: break-word; }
   .info-grid dd .unsure { color: var(--ink-faint); font-weight: 400; font-style: italic; }
   .info-grid a { color: var(--navy); text-decoration: none; border-bottom: 1px solid transparent; }
   .info-grid a:hover { border-bottom-color: var(--navy); }
