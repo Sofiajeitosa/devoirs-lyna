@@ -353,6 +353,22 @@
   .note-grade-mid { background: var(--amber-soft); color: var(--amber); }
   .note-grade-low { background: var(--red-soft); color: var(--red); }
 
+  .notes-stats {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 18px;
+    margin: 14px 0 18px; padding: 14px 18px; border-radius: 12px;
+    background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .notes-avg-general {
+    display: flex; flex-direction: column; align-items: flex-start;
+    padding-right: 18px; border-right: 1px solid color-mix(in srgb, var(--ink-faint) 35%, transparent);
+  }
+  .notes-avg-value { font-size: 28px; font-weight: 800; color: var(--navy); font-variant-numeric: tabular-nums; line-height: 1; }
+  .notes-avg-label { font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+  .notes-avg-subjects { display: flex; flex-wrap: wrap; gap: 14px; flex: 1; }
+  .notes-avg-subject { display: flex; flex-direction: column; align-items: flex-start; font-size: 12.5px; }
+  .notes-avg-subject .subj-name { color: var(--ink-soft); font-weight: 600; }
+  .notes-avg-subject .subj-value { font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; margin-top: 1px; }
+
   .empty-state { padding: 30px 4px 0; display: none; }
   .empty-state.show { display: block; }
   .empty-state .big {
@@ -704,6 +720,13 @@
   <!-- NOTES -->
   <div class="panel" id="panel-notes">
     <p class="summary" id="notesSummaryLine">Aucune note pour l'instant.</p>
+    <div class="notes-stats" id="notesStats" hidden>
+      <div class="notes-avg-general">
+        <span class="notes-avg-value" id="notesAvgGeneral">–</span>
+        <span class="notes-avg-label">Moyenne générale</span>
+      </div>
+      <div class="notes-avg-subjects" id="notesAvgSubjects"></div>
+    </div>
     <ul class="devoir-list" id="listNotes">
       <li class="devoir">
         <div class="devoir-main">
@@ -712,6 +735,14 @@
           <span class="devoir-intitule">App creation Exercise</span>
         </div>
         <span class="note-grade note-grade-high">100/100</span>
+      </li>
+      <li class="devoir">
+        <div class="devoir-main">
+          <span class="devoir-matiere">EFL</span>
+          <span class="devoir-teacher-name">David Smith</span>
+          <span class="devoir-intitule">Contrôle</span>
+        </div>
+        <span class="note-grade note-grade-mid">20/40</span>
       </li>
     </ul>
     <div class="empty-state" id="notesEmptyState">
@@ -1216,6 +1247,44 @@
   } else {
     notesSummaryEl.innerHTML = `<strong>${notesCount}</strong> note${notesCount > 1 ? 's' : ''} enregistrée${notesCount > 1 ? 's' : ''}`;
   }
+
+  (function computeAverages() {
+    const items = Array.from(document.getElementById('listNotes').children);
+    const bySubject = new Map();
+    let totalPct = 0, totalN = 0;
+    items.forEach(li => {
+      const gradeEl = li.querySelector('.note-grade');
+      const matiereEl = li.querySelector('.devoir-matiere');
+      if (!gradeEl || !matiereEl) return;
+      const m = gradeEl.textContent.match(/(\d+(?:[.,]\d+)?)\s*\/\s*(\d+(?:[.,]\d+)?)/);
+      if (!m) return;
+      const score = parseFloat(m[1].replace(',', '.'));
+      const max = parseFloat(m[2].replace(',', '.'));
+      if (!max) return;
+      const pct = (score / max) * 100;
+      const subject = matiereEl.textContent.trim();
+      if (!bySubject.has(subject)) bySubject.set(subject, []);
+      bySubject.get(subject).push(pct);
+      totalPct += pct;
+      totalN++;
+    });
+
+    const statsEl = document.getElementById('notesStats');
+    if (totalN === 0) { statsEl.hidden = true; return; }
+    statsEl.hidden = false;
+
+    document.getElementById('notesAvgGeneral').textContent = Math.round(totalPct / totalN) + '%';
+
+    const subjEl = document.getElementById('notesAvgSubjects');
+    subjEl.innerHTML = '';
+    bySubject.forEach((pcts, subject) => {
+      const avg = Math.round(pcts.reduce((a, b) => a + b, 0) / pcts.length);
+      const item = document.createElement('div');
+      item.className = 'notes-avg-subject';
+      item.innerHTML = `<span class="subj-name">${subject}</span><span class="subj-value">${avg}%</span>`;
+      subjEl.appendChild(item);
+    });
+  })();
 
   function switchTab(name) {
     document.querySelectorAll('.tab-btn').forEach(b => {
