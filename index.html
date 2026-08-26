@@ -1282,9 +1282,28 @@
       const item = document.createElement('div');
       item.className = 'notes-avg-subject';
       item.innerHTML = `<span class="subj-name">${subject}</span><span class="subj-value">${avg}%</span>`;
+      item.querySelector('.subj-name').style.color = `var(${subjectColorVar(subject)})`;
       subjEl.appendChild(item);
     });
   })();
+
+  function subjectColorVar(name) {
+    const s = name.toLowerCase();
+    if (s.includes('math')) return '--sf-math';
+    if (s.includes('bio') || s.includes('chem') || s.includes('phys') || s.includes('sci')) return '--sf-sci';
+    if (s.includes('efl') || s.includes('english')) return '--sf-eng';
+    if (s.includes('mandarin') || s.includes('chinese')) return '--sf-zh';
+    if (s.includes('ict') || s.includes('computing') || s.includes('comput')) return '--sf-ict';
+    if (s.includes('art') || s.includes('music')) return '--sf-arts';
+    if (s.includes('pe') || s.includes('sport') || s.includes('basketball')) return '--sf-pe';
+    if (s.includes('perspective') || s.includes('human') || s.includes('pshe') || s.includes('wellio')) return '--sf-hum';
+    if (s.includes('homeroom')) return '--sf-home';
+    return '--sf-home';
+  }
+
+  document.querySelectorAll('.devoir-matiere').forEach(el => {
+    el.style.color = `var(${subjectColorVar(el.textContent)})`;
+  });
 
   function switchTab(name) {
     document.querySelectorAll('.tab-btn').forEach(b => {
