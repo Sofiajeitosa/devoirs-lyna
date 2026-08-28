@@ -1246,6 +1246,11 @@
     summaryEl.innerHTML = line;
   }
 
+  if ('setAppBadge' in navigator) {
+    if (openCount > 0) navigator.setAppBadge(openCount).catch(() => {});
+    else navigator.clearAppBadge().catch(() => {});
+  }
+
   const faitCount = document.getElementById('listFait').children.length;
   const renduSummaryEl = document.getElementById('renduSummaryLine');
   const renduEmptyEl = document.getElementById('renduEmptyState');
