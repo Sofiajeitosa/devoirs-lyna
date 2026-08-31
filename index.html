@@ -607,6 +607,8 @@
   .doc-viewer-title { font-family: 'Source Serif 4', Georgia, serif; font-weight: 700; font-size: 17px; color: var(--ink); margin: 0 34px 14px 0; }
   .doc-viewer-images { display: flex; flex-direction: column; gap: 14px; }
   .doc-viewer-images img { display: block; width: 100%; border-radius: 10px; border: 1px solid var(--rule); }
+  .doc-viewer-text { font-size: 14.5px; line-height: 1.7; color: var(--ink); white-space: pre-line; }
+  .devoir-detail { display: none; }
   .devoir-attach-hint { display: block; font-size: 11px; color: var(--navy); margin-top: 2px; font-weight: 600; }
 </style>
 </head>
@@ -680,6 +682,14 @@
             <span class="devoir-matiere">Global Perspectives</span>
             <span class="devoir-teacher-name">Jessica Jackson</span>
             <span class="devoir-intitule">Ranking of importance</span>
+            <span class="devoir-attach-hint">Voir le détail →</span>
+            <div class="devoir-detail">Which matters more ?
+- Saving lives
+- Saving time
+- Spreading knowledge
+- Increasing economic productivity
+
+Classer les 4 par ordre d'importance. Il n'y a pas de reponse neutre : elle doit justifier ses criteres / son classement.</div>
           </div>
           <span class="devoir-echeance">3 sept.</span>
         </li>
@@ -1435,6 +1445,13 @@
     const intitule = li.querySelector('.devoir-intitule')?.textContent || '';
     docViewerTitle.textContent = matiere + (intitule ? ' — ' + intitule : '');
     docViewerImages.innerHTML = '';
+    const detail = li.querySelector('.devoir-detail');
+    if (detail) {
+      const p = document.createElement('div');
+      p.className = 'doc-viewer-text';
+      p.textContent = detail.textContent;
+      docViewerImages.appendChild(p);
+    }
     li.querySelectorAll('.devoir-attachment').forEach(img => {
       const clone = document.createElement('img');
       clone.src = img.src;
@@ -1450,7 +1467,7 @@
   }
 
   document.querySelectorAll('.devoir').forEach(li => {
-    if (li.querySelector('.devoir-attachment')) {
+    if (li.querySelector('.devoir-attachment') || li.querySelector('.devoir-detail')) {
       li.classList.add('has-attachment');
       li.addEventListener('click', () => openDocViewer(li));
     }
