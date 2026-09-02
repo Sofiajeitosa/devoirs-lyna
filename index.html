@@ -405,6 +405,10 @@
     color: var(--navy);
     margin-bottom: 16px;
   }
+  .bourse-note { font-size: 13px; line-height: 1.6; color: var(--ink-soft); margin: -8px 0 16px; }
+  .bourse-status { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 11.5px; font-weight: 700; }
+  .bourse-status-sent { background: var(--green-soft); color: var(--green); }
+  .bourse-status-pending { background: var(--amber-soft); color: var(--amber); }
   .info-grid { display: grid; grid-template-columns: auto 1fr; row-gap: 10px; column-gap: 18px; font-size: 13.5px; }
   .info-grid dt { color: var(--ink-soft); white-space: nowrap; }
   .info-grid dd { color: var(--ink); font-weight: 600; min-width: 0; overflow-wrap: anywhere; word-break: break-word; }
@@ -647,6 +651,7 @@
     <button type="button" class="tab-btn" data-tab="notes" role="tab" aria-selected="false">Notes</button>
     <button type="button" class="tab-btn" data-tab="resume" role="tab" aria-selected="false">Résumé de cours</button>
     <button type="button" class="tab-btn" data-tab="emploi" role="tab" aria-selected="false">Emploi du temps</button>
+    <button type="button" class="tab-btn" data-tab="bourse" role="tab" aria-selected="false">Bourse</button>
     <button type="button" class="tab-btn" data-tab="contact" role="tab" aria-selected="false">Contact</button>
   </div>
 
@@ -994,6 +999,26 @@ Classer les 4 par ordre d'importance. Il n'y a pas de reponse neutre : elle doit
     </div>
   </div>
 
+  <!-- BOURSE -->
+  <div class="panel" id="panel-bourse">
+    <div class="info-card">
+      <div class="info-title">Bourse 2026-2027 — accordée</div>
+      <p class="bourse-note">L'école demande d'envoyer photos, certificats ou résultats des compétitions de Lyna pour les partager sur les réseaux du collège.</p>
+      <dl class="info-grid">
+        <dt>Secrétariat</dt><dd><a href="mailto:secretary.wis@windfield.ac.th">secretary.wis@windfield.ac.th</a></dd>
+        <dt>Équipe réseaux sociaux</dt><dd><a href="mailto:wis.socialmedia@windfield.ac.th">wis.socialmedia@windfield.ac.th</a></dd>
+      </dl>
+    </div>
+    <p class="summary" id="bourseSummaryLine">Aucune réussite enregistrée pour l'instant.</p>
+    <ul class="devoir-list" id="listBourse">
+      <!-- BOURSE_ITEMS -->
+    </ul>
+    <div class="empty-state" id="bourseEmptyState">
+      <p class="big">Rien pour l'instant</p>
+      <p class="small">Les compétitions, médailles et réussites de Lyna apparaîtront ici.</p>
+    </div>
+  </div>
+
   <!-- CONTACT -->
   <div class="panel" id="panel-contact">
     <div class="info-card">
@@ -1325,6 +1350,20 @@ Classer les 4 par ordre d'importance. Il n'y a pas de reponse neutre : elle doit
         if (isOpen) list.setAttribute('hidden', ''); else list.removeAttribute('hidden');
       });
     });
+  })();
+
+  (function bourseStats() {
+    const listEl = document.getElementById('listBourse');
+    const summaryEl = document.getElementById('bourseSummaryLine');
+    const emptyEl = document.getElementById('bourseEmptyState');
+    if (!listEl) return;
+    const count = listEl.children.length;
+    if (count === 0) {
+      emptyEl.classList.add('show');
+      summaryEl.textContent = 'Aucune réussite enregistrée pour l\'instant.';
+    } else {
+      summaryEl.innerHTML = `<strong>${count}</strong> réussite${count > 1 ? 's' : ''} enregistrée${count > 1 ? 's' : ''}`;
+    }
   })();
 
   const groups = [
