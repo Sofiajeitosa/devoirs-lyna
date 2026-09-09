@@ -1666,6 +1666,7 @@ Pour les images IA : textures trop lisses/symetriques, details bizarres sur les 
     });
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     document.getElementById('panel-' + name).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
   document.querySelectorAll('.tab-btn').forEach(btn => {
