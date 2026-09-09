@@ -516,7 +516,7 @@
   .person-email a:hover { text-decoration: underline; }
 
   @media (max-width: 520px) {
-    .masthead-band { padding: 28px 18px 46px; }
+    .masthead-band { padding: calc(28px + env(safe-area-inset-top)) 18px 46px; }
     .masthead h1 { font-size: 27px; }
     .masthead-photo img { width: 92px; height: 92px; }
     .page { padding: 0 18px 70px; }
