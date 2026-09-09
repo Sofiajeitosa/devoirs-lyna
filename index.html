@@ -195,8 +195,14 @@
     margin: -24px 0 30px;
     position: relative;
     box-shadow: 0 4px 14px rgba(0,0,0,0.14);
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
+  .tabs::-webkit-scrollbar { display: none; }
   .tab-btn {
+    flex-shrink: 0;
     appearance: none;
     background: none;
     border: none;
