@@ -251,6 +251,12 @@
     font-size: 11px; font-weight: 700; color: #fff; background: var(--ink-faint);
     border-radius: 10px; padding: 2px 9px; font-variant-numeric: tabular-nums;
   }
+  .acc-subject-count.grade-high { background: var(--green-soft); color: var(--green); }
+  .acc-subject-count.grade-mid { background: var(--amber-soft); color: var(--amber); }
+  .acc-subject-count.grade-low { background: var(--red-soft); color: var(--red); }
+  .notes-avg-value.grade-high { color: var(--green); }
+  .notes-avg-value.grade-mid { color: var(--amber); }
+  .notes-avg-value.grade-low { color: var(--red); }
   .acc-subject-chevron { font-size: 18px; color: var(--ink-faint); transition: transform 0.15s; }
   .acc-subject-btn[aria-expanded="true"] .acc-subject-chevron { transform: rotate(90deg); }
   .acc-subject-list { margin: 8px 0 0; padding-left: 4px; }
@@ -1996,12 +2002,26 @@ Pour les images IA : textures trop lisses/symetriques, details bizarres sur les 
     if (totalN === 0) { statsEl.hidden = true; return; }
     statsEl.hidden = false;
 
-    document.getElementById('notesAvgGeneral').textContent = Math.round(totalPct / totalN) + '%';
+    function gradeClass(pct) {
+      if (pct >= 75) return 'grade-high';
+      if (pct >= 50) return 'grade-mid';
+      return 'grade-low';
+    }
+
+    const generalAvg = Math.round(totalPct / totalN);
+    const generalEl = document.getElementById('notesAvgGeneral');
+    generalEl.textContent = generalAvg + '%';
+    generalEl.classList.remove('grade-high', 'grade-mid', 'grade-low');
+    generalEl.classList.add(gradeClass(generalAvg));
 
     bySubject.forEach((pcts, subject) => {
       const avg = Math.round(pcts.reduce((a, b) => a + b, 0) / pcts.length);
       const badge = document.getElementById('notesAvg-' + subject.replace(/\s+/g, ''));
-      if (badge) badge.textContent = avg + '%';
+      if (badge) {
+        badge.textContent = avg + '%';
+        badge.classList.remove('grade-high', 'grade-mid', 'grade-low');
+        badge.classList.add(gradeClass(avg));
+      }
     });
   })();
 
