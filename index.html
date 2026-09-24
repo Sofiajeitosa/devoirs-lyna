@@ -2249,7 +2249,7 @@ Pour les images IA : textures trop lisses/symetriques, details bizarres sur les 
     if (detail) {
       const p = document.createElement('div');
       p.className = 'doc-viewer-text';
-      p.textContent = detail.textContent;
+      p.innerHTML = detail.innerHTML;
       docViewerImages.appendChild(p);
     }
     li.querySelectorAll('.devoir-attachment').forEach(img => {
