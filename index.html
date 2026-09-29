@@ -698,6 +698,8 @@
     }
     document.getElementById('pinSubmit').addEventListener('click', tryUnlock);
     input.addEventListener('keydown', function(e) { if (e.key === 'Enter') tryUnlock(); });
+    input.addEventListener('input', function() { if (input.value.length >= 6) tryUnlock(); });
+    setTimeout(function() { if (!gate.hidden) input.focus(); }, 100);
   })();
 </script>
 
