@@ -672,8 +672,10 @@
   <div class="pin-gate-card">
     <h2>Devoirs de Lyna</h2>
     <p>Entre le code pour accéder à la page</p>
-    <input type="tel" inputmode="numeric" maxlength="6" class="pin-gate-input" id="pinInput" placeholder="••••••" autocomplete="off">
-    <button type="button" class="pin-gate-btn" id="pinSubmit">Déverrouiller</button>
+    <form id="pinForm">
+      <input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="6" class="pin-gate-input" id="pinInput" placeholder="••••••" autocomplete="off">
+      <button type="submit" class="pin-gate-btn" id="pinSubmit">Déverrouiller</button>
+    </form>
     <div class="pin-gate-error" id="pinError"></div>
   </div>
 </div>
@@ -683,23 +685,27 @@
     if (document.body.classList.contains('pin-locked')) {
       gate.hidden = false;
     }
+    var form = document.getElementById('pinForm');
     var input = document.getElementById('pinInput');
     var error = document.getElementById('pinError');
     function tryUnlock() {
-      if (input.value === '270614') {
+      if (input.value.trim() === '270614') {
         localStorage.setItem('devoirsLynaUnlocked', '1');
         document.body.classList.remove('pin-locked');
         gate.hidden = true;
       } else {
-        error.textContent = 'Code incorrect, réessaie.';
+        error.textContent = 'Code incorrect (' + input.value + '), réessaie.';
         input.value = '';
         input.focus();
       }
     }
-    document.getElementById('pinSubmit').addEventListener('click', tryUnlock);
-    input.addEventListener('keydown', function(e) { if (e.key === 'Enter') tryUnlock(); });
-    input.addEventListener('input', function() { if (input.value.length >= 6) tryUnlock(); });
-    setTimeout(function() { if (!gate.hidden) input.focus(); }, 100);
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      tryUnlock();
+    });
+    input.addEventListener('input', function() {
+      if (input.value.replace(/\D/g, '').length >= 6) tryUnlock();
+    });
   })();
 </script>
 
