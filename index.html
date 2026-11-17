@@ -1880,7 +1880,7 @@ Themes couverts :
       <div class="acc-subject">
         <button type="button" class="acc-subject-btn" aria-expanded="false">
           <span class="acc-subject-name">Chemistry</span>
-          <span class="acc-subject-count">7</span>
+          <span class="acc-subject-count">8</span>
           <span class="acc-subject-chevron">›</span>
         </button>
         <ul class="devoir-list acc-subject-list" hidden>
@@ -2060,7 +2060,16 @@ Deux planches d'activite incluses (10 equations a equilibrer au total, ex. O2+NH
             <img class="devoir-attachment" src="chemistry/atomicmodels16.jpg" alt="Atomic Models Notes page 16">
             <img class="devoir-attachment" src="chemistry/atomicmodels17.jpg" alt="Atomic Models Notes page 17">
           </li>
-        </ul>
+                  <li class="devoir" data-due="2026-11-14">
+          <div class="devoir-main">
+            <span class="devoir-matiere">Chemistry</span>
+            <span class="devoir-teacher-name">Akhil Omanakuttan</span>
+            <span class="devoir-intitule">Chemical bonding — cours</span>
+          </div>
+          <div class="devoir-detail">Support de cours publie le 14 nov. Contenu non disponible pour l'instant (pas de piece jointe recuperable depuis Classroom) — a completer si le document est retrouve.</div>
+          <span class="devoir-echeance">14 nov.</span>
+        </li>
+</ul>
       </div>
       <div class="acc-subject">
         <button type="button" class="acc-subject-btn" aria-expanded="false">
@@ -2263,7 +2272,7 @@ Deux planches d'activite incluses (10 equations a equilibrer au total, ex. O2+NH
       </div><div class="acc-subject">
         <button type="button" class="acc-subject-btn" aria-expanded="false">
           <span class="acc-subject-name">ICT</span>
-          <span class="acc-subject-count">9</span>
+          <span class="acc-subject-count">10</span>
           <span class="acc-subject-chevron">›</span>
         </button>
         <ul class="devoir-list acc-subject-list" hidden>
@@ -2515,7 +2524,16 @@ Pour les images IA : textures trop lisses/symetriques, details bizarres sur les 
           </div>
           <span class="devoir-echeance">10 nov.</span>
         </li>
-        </ul>
+                  <li class="devoir" data-due="2026-11-17">
+          <div class="devoir-main">
+            <span class="devoir-matiere">ICT</span>
+            <span class="devoir-teacher-name">Ms.Meadhbh Rogers</span>
+            <span class="devoir-intitule">Revision Worksheet — Term 1B Test</span>
+          </div>
+          <div class="devoir-detail">Fiche d'exercices pour reviser avec les slides, pour le Term 1B Test. Une seule phrase de consigne dans Classroom, pas de piece jointe a recuperer.</div>
+          <span class="devoir-echeance">17 nov.</span>
+        </li>
+</ul>
       </div>
       <div class="acc-subject">
         <button type="button" class="acc-subject-btn" aria-expanded="false">
@@ -3040,7 +3058,9 @@ Pour les images IA : textures trop lisses/symetriques, details bizarres sur les 
       </div>
     </div>
     <p class="summary" id="assuranceSummaryLine" style="margin-top:24px">Aucune carte d'assurance enregistrée pour l'instant.</p>
-    <ul id="listAssurance" class="assurance-list"><li>Details disponibles dans le dossier Assurance (Drive)</li></ul>
+    <ul class="devoir-list" id="listAssurance">
+          <!-- contenu prive retire pour la version publique -->
+        </ul>
     <div class="empty-state" id="assuranceEmptyState">
       <p class="big">Rien pour l'instant</p>
       <p class="small">Les cartes d'assurance de Lyna apparaîtront ici.</p>
@@ -3537,6 +3557,8 @@ Pour les images IA : textures trop lisses/symetriques, details bizarres sur les 
     if (e.key === 'Escape') { closeLightbox(); closeDocViewer(); }
   });
 </script>
+
+</body>
 </div>
   <script>
   (function(){
