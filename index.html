@@ -753,6 +753,16 @@
         </li>
         <li class="devoir afaire" data-due="2026-11-23">
           <div class="devoir-main">
+            <span class="devoir-matiere">Math</span>
+            <span class="devoir-teacher-name">Lena Korostylova</span>
+            <span class="devoir-intitule">Factorisation of Algebraic Expressions — fiche d'exercices</span>
+            <span class="devoir-attach-hint"></span>
+            <div class="devoir-detail">Devoir du 20 nov. : completer la fiche d'exercices basee sur le cours du jour. Contenu non disponible pour l'instant (pas de piece jointe recuperable depuis Classroom) — a completer si le document est retrouve.</div>
+          </div>
+          <span class="devoir-echeance">23 nov.</span>
+        </li>
+        <li class="devoir afaire" data-due="2026-11-23">
+          <div class="devoir-main">
             <span class="devoir-matiere">Chemistry</span>
             <span class="devoir-teacher-name">Akhil Omanakuttan</span>
             <span class="devoir-intitule">Examen Term 1 (8B, période 5)</span>
@@ -3256,7 +3266,9 @@ A retenir : les proteines fournissent les briques de construction pour la croiss
     const listRetard = document.getElementById('listRetard');
     if (!listAfaire || !listRetard) return;
     Array.from(listAfaire.querySelectorAll('.devoir[data-due]')).forEach(li => {
-      if (li.dataset.due < todayISO) {
+      const intitule = li.querySelector('.devoir-intitule');
+      const estExamen = intitule && intitule.textContent.trim().startsWith('Examen');
+      if (li.dataset.due < todayISO && !estExamen) {
         li.classList.remove('afaire');
         li.classList.add('retard');
         listRetard.appendChild(li);
